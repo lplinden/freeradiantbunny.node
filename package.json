@@ -1,0 +1,31 @@
+{
+  "name": "freeradiantbunny.node",
+  "version": "0.3.1",
+  "description": "FreeRadiantBunny",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dustjs-helpers": "^1.7.4",
+    "dustjs-linkedin": "^2.7.5",
+    "express": "^4.17.1",
+    "freeradiantbunny": "^0.2.21",
+    "html-validator": "^3.0.6",
+    "https": "^1.0.0",
+    "pg": "^7.16.1",
+    "querystring": "^0.2.0",
+    "socket.io": "^2.3.0",
+    "toml": "^2.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/lars_paul_linden/freeradiantbunny.node.js.git"
+  },
+  "keywords": "freeradiantbunny",
+  "author": "Lars Paul Linden <lars@freeradiantbunny.org> (https://freeradiantbunny.org/)",
+  "license": "MIT",
+  "homepage": "https://freeradiantbunny.org/",
+  "devDependencies": {}
+}
