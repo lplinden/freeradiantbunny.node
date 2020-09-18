@@ -1,10 +1,10 @@
 /*!
  * freeradiantbunny.demo
- * demo for freeradiantbunny node.js module
+ * version 3.2
+ * demo node.js webserver for freeradiantbunny node.js module
  * see https://freeradiantbunny.org/
- * Copyright(c) 2018 Lars Paul Linden
- * MIT Licensed
- * version 0.3.1 2020-09-10
+ * Copyright(c) 2020 Lars Paul Linden
+ * GNU GENERAL PUBLIC LICENSE Version 3
 */
 
 'use strict';
