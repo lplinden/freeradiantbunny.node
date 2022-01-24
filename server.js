@@ -38,7 +38,7 @@ io.sockets.on('connection', function (socket) {
 
 // homepage 1 of 2
 app.get('/', function (req, res) {
-    debug("------------------------------------");
+    debug("---------------- 1 --------------------");
     webpagesServedCount = webpagesServedCount + 1;
     debug("server get / webpages-served-count=", webpagesServedCount);
     // get response based on vhost
@@ -66,7 +66,7 @@ app.get('/', function (req, res) {
 
 // robots.txt
 app.get('/robots.txt', function (req, res) {
-    debug("------------------------------------");
+    debug("---------------- 2 --------------------");
     debug("server gt /robot.stxt");
     // get response based on host
     var host = req.headers.host,
@@ -83,8 +83,8 @@ app.get('/robots.txt', function (req, res) {
 });
 
 // homepage 2 of 2
-app.get('/*[html]', function (req, res) {
-    debug("------------------------------------");
+app.get('/*[html]', function (req, res) { 
+    debug("---------------- 3 --------------------");
     webpagesServedCount = webpagesServedCount + 1;
     debug("server get /*[html] ", webpagesServedCount);
     // get response based on host
@@ -121,7 +121,8 @@ app.get('/*[html]', function (req, res) {
 
 // post
 app.post('/search.html?', function (req, res) {
-    debug("-------------------POST--------------------");
+    debug("---------------- 4 --------------------");
+    debug("server POST search.html");
     // deal with param string in url
     // post parameter
     // try below or try bodyParser
@@ -176,10 +177,10 @@ app.post('/search.html?', function (req, res) {
 
 // external javascript file
 app.get('*_js/*[js|map]', function (req, res) {
-    debug("------------------------------------");
+    debug("---------------- 5 --------------------");
     var request = url.parse(req.url, true);
     var pageName = validator.validateRequestPathName(request.pathname);
-    debug("server javascript-file found user pageName =", pageName);
+    debug("server js found user pageName =", pageName);
     // get response based on vhost
     var host = req.headers.host;
     if (config.isHostValidVhost(host)) {
@@ -195,9 +196,10 @@ app.get('*_js/*[js|map]', function (req, res) {
 
 // css
 app.get('*css', function (req, res) {
-    debug("------------------------------------");
+    debug("---------------- 6 --------------------");
     var request = url.parse(req.url, true);
     var pageName = validator.validateRequestPathName(request.pathname);
+    debug("server css found user pageName =", pageName);
     // get response based on vhost
     var host = req.headers.host;
     if (config.isHostValidVhost(host)) {
@@ -213,9 +215,10 @@ app.get('*css', function (req, res) {
 
 // image
 app.get('*[png|jpg|gif]', function (req, res) {
-    debug("------------------------------------");
+    debug("---------------- 7 --------------------");
     var request = url.parse(req.url, true);
     var pageName = validator.validateRequestPathName(request.pathname);
+    debug("server png-jpg-gif found user pageName =", pageName);
     // get response based on vhost
     var host = req.headers.host;
     if (config.isHostValidVhost(host)) {
@@ -232,7 +235,8 @@ app.get('*[png|jpg|gif]', function (req, res) {
 
 // favicon.ico
 app.get('/favicon.ico', function (req, res) {
-    debug("------------------------------------");
+    debug("---------------- 8 --------------------");
+    debug("server favicon.ico");
     // get response based on vhost
     var host = req.headers.host;
     if (config.isHostValidVhost(host)) {
@@ -250,7 +254,7 @@ app.get('/favicon.ico', function (req, res) {
 // freeradiantbunny RESTful input 1 of 2
 // question mark in the string below makes id optional
 app.get('/:className/:id?', function (req, res) {
-    debug("------------------------------------");
+    debug("---------------- 9 --------------------");
     webpagesServedCount = webpagesServedCount + 1;
     debug(webpagesServedCount + " server get /:className/:id?");
     var why;
@@ -287,7 +291,7 @@ app.get('/:className/:id?', function (req, res) {
 // freeradiantbunny RESTful input 2 of 2
 // question mark in the string below makes id optional
 app.get('/:className/:classNameFilter/:id?', function (req, res) {
-    debug("------------------------------------");
+    debug("---------------- 10 --------------------");
     webpagesServedCount = webpagesServedCount + 1;
     debug(webpagesServedCount + " server get /:className/:classNameFilter/:id?");
     var why;
