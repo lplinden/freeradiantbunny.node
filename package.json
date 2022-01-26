@@ -14,7 +14,7 @@
     "freeradiantbunny": "^0.2.21",
     "html-validator": "^3.0.6",
     "https": "^1.0.0",
-    "pg": "^7.16.1",
+    "pg": "8.0.0",
     "querystring": "^0.2.0",
     "socket.io": "^2.3.0",
     "toml": "^2.3.3"
