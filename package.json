@@ -8,13 +8,13 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "dustjs-helpers": "^1.7.4",
-    "dustjs-linkedin": "^2.7.5",
+    "dustjs-helpers": "^1.6.3",
+    "dustjs-linkedin": "^3.0.1",
     "express": "^4.17.1",
     "freeradiantbunny": "^0.2.21",
     "html-validator": "^3.0.6",
     "https": "^1.0.0",
-    "pg": "8.0.0",
+    "pg": "^8.7.1",
     "querystring": "^0.2.0",
     "socket.io": "^2.3.0",
     "toml": "^2.3.3"
@@ -26,6 +26,5 @@
   "keywords": "freeradiantbunny",
   "author": "Lars Paul Linden <lars@freeradiantbunny.org> (https://freeradiantbunny.org/)",
   "license": "MIT",
-  "homepage": "https://freeradiantbunny.org/",
-  "devDependencies": {}
+  "homepage": "https://freeradiantbunny.org/"
 }

@@ -58,8 +58,8 @@ app.get('/', function (req, res) {
             serveFile(res, host, pageName, type);
         }
     } else {
-	debug("server sending error");
         var why = "vhosts does not know host: " + host;
+	debug("server sending error 1 why =", why);
         freeradiantbunny.send404(res, why);
     }
 });
@@ -76,8 +76,8 @@ app.get('/robots.txt', function (req, res) {
         debug("server is robots.txt =", pageName);
         serveFile(res, host, pageName, type);
     } else {
-	debug("server sending error");
         var why = "host is not known: " + host;
+	debug("server sending error 2 why =", why);
         freeradiantbunny.send404(res, why);
     }
 });
@@ -89,7 +89,6 @@ app.get('/*[html]', function (req, res) {
     debug("server get /*[html] ", webpagesServedCount);
     // get response based on host
     var host = req.headers.host;
-    var why;
     if (config.isHostValidVhost(host)) {
         // take request URL and find pageName
         var request = url.parse(req.url, true);
@@ -108,13 +107,13 @@ app.get('/*[html]', function (req, res) {
             var type = "text/html";
             serveFile(res, host, pageName, type);
         } else {
-	    debug("server sending error");
-            why = "pageName is not known: " + pageName;
+            var why = "pageName is not known: " + pageName;
+	    debug("server sending error 3 why =", why);
             freeradiantbunny.send404(res, why);
         }
     } else {
-	debug("server sending error");
-        why = "host not known: " +  host;
+        var why = "host not known: " +  host;
+	debug("server sending error 4 why =", why);
         freeradiantbunny.send404(res, why);
     }
 });
@@ -167,8 +166,8 @@ app.post('/search.html?', function (req, res) {
             // define the special page and go get it
             controller.serveUpWebPage(res, className, pageName, io, queryTerms);
         } else {
-	    debug("server sending error");
             var why = "post failed";
+	    debug("server sending error 5 why =", why);
             freeradiantbunny.send404(res, why);
         }
     });
@@ -187,8 +186,8 @@ app.get('*_js/*[js|map]', function (req, res) {
         var type = "text/javascript";
         serveFile(res, host, pageName, type);
     } else {
-	debug("server sending error");
         var why = "js input is not valid";
+	debug("server sending error 6 why =", why);
         freeradiantbunny.send404(res, why);
     }
 });
@@ -205,8 +204,8 @@ app.get('*css', function (req, res) {
 	debug("server css-file serving user pageName =", pageName);
         serveFile(res, host, pageName, type);
     } else {
-	debug("server sending error");
         var why = "css host is not known: " + host;
+	debug("server sending error 7 why =", why);
         freeradiantbunny.send404(res, why);
     }
 });
@@ -224,8 +223,8 @@ app.get('*[png|jpg|gif]', function (req, res) {
         var type = "image/" + fileExtention;
         serveFile(res, host, pageName, type);
     } else {
-	debug("server sending error");
         var why = "image file host is not known: " + host;
+	debug("server sending error 8 why =", why);
         freeradiantbunny.send404(res, why);
     }
 });
@@ -241,8 +240,8 @@ app.get('/favicon.ico', function (req, res) {
         var type = "image/x-icon";
         serveFile(res, host, pageName, type);
     } else {
-	debug("server sending error");
         var why = "favicon.ico file host is not known: " + host;
+	debug("server sending error 9 why =", why);
         freeradiantbunny.send404(res, why);
     }
 });
@@ -253,23 +252,21 @@ app.get('/:className/:id?', function (req, res) {
     debug("------------------------------------");
     webpagesServedCount = webpagesServedCount + 1;
     debug(webpagesServedCount + " server get /:className/:id?");
-    var why;
     // validate the className
     if (validator.isValidClassName(req.params.className)) {
         var className = req.params.className;
         debug("server validated className =", className);
-	console.log("server.js className =", className); 
+	debug("server.js className =", className); 
 	// var id
         var id_temp = "";
-	console.log("server.js id =", id_temp);
+	debug("server.js id =", id_temp);
         var classNameFilter = "";
         debug("server classNameFilter =", classNameFilter);  
-	//console.log("server.js classNameFilter =", classNameFilter);
         // deal with id
         var idValidatorReport = validator.validateId(req.params.id);
         if (req.params.id !== undefined && req.params.id !== idValidatorReport) {
-	    debug("server sending error");
-            why = "id parameter is not workable";
+            var why = "id parameter is not workable";
+	    debug("server sending error 10 why =", why);
             freeradiantbunny.send404(res, why);
         } else {
             var id = idValidatorReport;
@@ -278,8 +275,8 @@ app.get('/:className/:id?', function (req, res) {
             controller.serveUpWebPageWithId(reqQuery, res, className, classNameFilter, id, io);
         }
     } else {
-	debug("server sending error");
-        why = "className is not valid";
+        why = "not valid className = " + req.params.className;
+	debug("server sending error 11 why =", why);
         freeradiantbunny.send404(res, why);
     }
 });
@@ -290,19 +287,15 @@ app.get('/:className/:classNameFilter/:id?', function (req, res) {
     debug("------------------------------------");
     webpagesServedCount = webpagesServedCount + 1;
     debug(webpagesServedCount + " server get /:className/:classNameFilter/:id?");
-    var why;
     // validate the className
     if (validator.isValidClassName(req.params.className)) {
         var className = req.params.className;
         debug("server validated className =", className);
-	console.log("server.js validated className =", className);
 	// var id
         var id_temp = req.params.id;
         debug("server id =", id_temp);
-	console.log("server.js id =", id_temp);
         var classNameFilter_temp = req.params.classNameFilter;
         debug("server classNameFilter =", classNameFilter_temp);
-	console.log("server.js classNameFilter =", classNameFilter_temp);
         // validate the classNameFilter (which should be a valid className)
         if (validator.isValidClassName(req.params.classNameFilter)) {
             var classNameFilter = req.params.classNameFilter;
@@ -310,8 +303,8 @@ app.get('/:className/:classNameFilter/:id?', function (req, res) {
             // validate the id
             var idValidatorReport = validator.validateId(req.params.id);
             if (req.params.id !== undefined && req.params.id !== idValidatorReport) {
-		debug("server sending error");
-                why = "id is not valid";
+                var why = "id is not valid";
+		debug("server sending error 12 why =", why);
                 freeradiantbunny.send404(res, why);
             } else {
                 var id = idValidatorReport;
@@ -320,13 +313,13 @@ app.get('/:className/:classNameFilter/:id?', function (req, res) {
                 controller.serveUpWebPageWithId(reqQuery, res, className, classNameFilter, id, io);
             }
         } else {
-	    debug("server sending error");
-            why = "classNameFilter is not valid";
+            var why = "classNameFilter is not valid";
+	    debug("server sending error 13 why =", why);
             freeradiantbunny.send404(res, why);
         }
     } else {
-	debug("server sending error");
-        why = "className is not valid";
+        var why = "className is not valid";
+	debug("server sending error 14 why =", why);
         freeradiantbunny.send404(res, why);
     }
 });
@@ -334,39 +327,37 @@ app.get('/:className/:classNameFilter/:id?', function (req, res) {
 // used in serveFile()
 function readImage(callback, res, type, givenFileName) {
     var fs = require('fs');
-    var why;
     try {
 	fs.readFile(givenFileName, function (error, data) {
             if (error) {
-		console.log("server readImage() readFile() error =", error.message);
+		debug("server readImage() readFile() error =", error.message);
 		return;
             }
             //fileContent = data;
             callback(data, res, type);
 	});
     } catch (error) {
-	debug("server throw error");
-        why = "server readImage() " + error;
+        var why = "server readImage() " + error;
+	debug("server throw error why =", why);
         throw why;
     }
 }
 
 // used in serveFile as a callback
 function serveImage(data, res, type) {
-    var why;
     if (data !== "undefined") {
 	try {
             res.writeHead(200, {'Content-Type': type});
             res.write(data, 'binary');
 	} catch (error) {
-	    debug("server throw error");
-            why = "server serveImage() error during writeHead() and write(); " + error;
+            var why = "server serveImage() error during writeHead() and write(); " + error;
+	    debug("server throw error why =", why);
             throw why;
 	}
         res.end();
     } else {
-	debug("server throw error");
-        why = "server serveImage() error because image data is undefined;";
+        var why = "server serveImage() error because image data is undefined;";
+	debug("server throw error why =", why);
         throw why;
     }
 }
@@ -375,25 +366,24 @@ function serveImage(data, res, type) {
 function serveFile(res, host, pageName, type) {
     var fs = require('fs');
     var fileName = "";
-    var why;
     if (type === "text/plain" ||
         type === "text/html") {
         fileName = config.getVhostHost(host) + pageName;
 	try {
             fs.readFile(fileName, function (error, data) {
                 if (error) {
-		    debug("server sending error");
 		    var why = "server serveFile() readFile() error =" + error.message;
+		    debug("server sending error 15 why =", why);
 		    freeradiantbunny.send404(res, why);
 		    return;
                 }
                 res.writeHead(200, {'Content-Type': type});
                 res.end(data);
-                console.log("server served file " + type + " =", fileName);
+                debug("server served file " + type + " =", fileName);
             });
 	} catch (error) {
-	    debug("server sending error");
-	    why = "server could not read fileName = " + fileName + "; errors = " + error;
+	    var why = "server could not read fileName = " + fileName + "; errors = " + error;
+	    debug("server sending error 16 why =", why);
 	    freeradiantbunny.send404(res, why);
 	}
     } else if (type === "text/css" ||
@@ -402,18 +392,18 @@ function serveFile(res, host, pageName, type) {
 	try {
             fs.readFile(fileName, function (error, data) {
 		if (error) {
-		    console.log("server error during readFile() error =", error.message);
+		    debug("server error during readFile() error =", error.message);
 		    // todo
                     // throw error;
 		    return;
 		}
 		res.writeHead(200, {'Content-Type': type});
 		res.end(data);
-		console.log("server served file " + type + " =", fileName);
+		debug("server served file " + type + " =", fileName);
             });
 	} catch (error) {
-	    why = "server error during readFile(); read fileName = " + fileName + "; error = " + error.message;
-	    console.log("server", why);
+	    var why = "server error during readFile(); read fileName = " + fileName + "; error = " + error.message;
+	    debug("server readFile() error why =", why);
 	}
     } else if (type === "image/png" ||
                type === "image/jpg" ||
@@ -423,12 +413,13 @@ function serveFile(res, host, pageName, type) {
 	try {
             // first parameter is a callback
             readImage(serveImage, res, type, fileName);
-            console.log("server served file " + type + " =", fileName);
+            debug("server served file " + type + " =", fileName);
 	} catch (error) {
-	    why = "could not read fileName = " + fileName + "; " + error;
-	    console.log("server", why);
+	    var why = "could not read fileName = " + fileName + "; " + error;
+	    debug("server could not read why =", why);
 	}
     } else {
-        debug("server error serveFile() does not know type = " + type + " for fileName = " + fileName);
+	var why = "unknown type = " + type + " for fileName = " + fileName;
+	debug("server error serveFile() why =", why);
     }
 }
